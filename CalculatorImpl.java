@@ -45,8 +45,9 @@ public class CalculatorImpl {
 					
 					BasicOperation divide = new DivideIntegers();
 					int res = divide.resultOfOp( num1, num2);
-					String temp = expr.substring(0, i-1) + String.valueOf(res)
-									+ expr.substring(i+2);
+					String temp = expr.substring(0, index1) + String.valueOf(res)
+									+ expr.substring(index2);
+					
 					expr = temp;
 					i = i - (index2 - index1);
 					if( i < 0 )
@@ -66,8 +67,8 @@ public class CalculatorImpl {
 					
 					BasicOperation add = new AddIntegers();
 					int res = add.resultOfOp( num1, num2 );
-					String temp = expr.substring(0, i-1) + String.valueOf(res)
-									+ expr.substring(i+2);
+					String temp = expr.substring(0, index1) + String.valueOf(res)
+									+ expr.substring(index2);
 					expr = temp;
 					
 					i = i - (index2 - index1);
@@ -84,8 +85,9 @@ public class CalculatorImpl {
 					
 					BasicOperation sub = new SubtractIntegers();
 					int res = sub.resultOfOp( num1, num2);
-					String temp = expr.substring(0, i-1) + String.valueOf(res)
-									+ expr.substring(i+2);
+					String temp = expr.substring(0, index1) + String.valueOf(res)
+									+ expr.substring(index2);
+					
 					expr = temp;
 					i = i - (index2 - index1);
 					if( i < 0 )
