@@ -20,36 +20,22 @@ public class CalculatorImpl {
 			// Multiplication and division
 			for( int i = 0; i < expr.length(); i++ ) {
 				char curr = expr.charAt(i);
-				if( curr == '*') {
-					int index1 = getOperand1( expr, i-1 );
-					int index2 = getOperand2( expr, i+1 );
-					
-					int num1 = Integer.valueOf( expr.substring(index1, i ) );
-					int num2 = Integer.valueOf( expr.substring(i+1, index2 ) );
-					
+				if( curr == '*') {					
 					BasicOperation multiply = new MultiplyIntegers();
-					int res = multiply.resultOfOp( num1, num2);
-					String temp = expr.substring(0, index1) + String.valueOf(res)
-									+ expr.substring(index2);
-					expr = temp;
-					i = i - (index2 - index1);
+					SingleUpdate upd = performOp(multiply, expr, i);
+					
+					expr = upd.newStr;
+					
+					i = i - (upd.index2 - upd.index1);
 					if( i < 0 )
 						i = 0;
 				} else if ( curr == '/' ) {
-					
-					int index1 = getOperand1( expr, i-1 );
-					int index2 = getOperand2( expr, i+1 );
-					
-					int num1 = Integer.valueOf( expr.substring(index1, i ) );
-					int num2 = Integer.valueOf( expr.substring(i+1, index2 ) );
-					
 					BasicOperation divide = new DivideIntegers();
-					int res = divide.resultOfOp( num1, num2);
-					String temp = expr.substring(0, index1) + String.valueOf(res)
-									+ expr.substring(index2);
+					SingleUpdate upd = performOp(divide, expr, i);
 					
-					expr = temp;
-					i = i - (index2 - index1);
+					expr = upd.newStr;
+					
+					i = i - (upd.index2 - upd.index1);
 					if( i < 0 )
 						i = 0;
 				}
@@ -59,42 +45,25 @@ public class CalculatorImpl {
 			for( int i = 0; i < expr.length(); i++ ) {
 				char curr = expr.charAt(i);
 				if( curr == '+') {
-					int index1 = getOperand1( expr, i-1 );
-					int index2 = getOperand2( expr, i+1 );
-					
-					int num1 = Integer.valueOf( expr.substring(index1, i ) );
-					int num2 = Integer.valueOf( expr.substring(i+1, index2 ) );
-					
 					BasicOperation add = new AddIntegers();
-					int res = add.resultOfOp( num1, num2 );
-					String temp = expr.substring(0, index1) + String.valueOf(res)
-									+ expr.substring(index2);
-					expr = temp;
+					SingleUpdate upd = performOp(add, expr, i);
 					
-					i = i - (index2 - index1);
+					expr = upd.newStr;
+					
+					i = i - (upd.index2 - upd.index1);
 					if( i < 0 )
 						i = 0;
-					
-					System.out.println(expr + " - " + i);
 				} else if ( curr == '-' ) {
-					int index1 = getOperand1( expr, i-1 );
-					int index2 = getOperand2( expr, i+1 );
-					
-					int num1 = Integer.valueOf( expr.substring(index1, i ) );
-					int num2 = Integer.valueOf( expr.substring(i+1, index2 ) );
-					
 					BasicOperation sub = new SubtractIntegers();
-					int res = sub.resultOfOp( num1, num2);
-					String temp = expr.substring(0, index1) + String.valueOf(res)
-									+ expr.substring(index2);
+					SingleUpdate upd = performOp(sub, expr, i);
 					
-					expr = temp;
-					i = i - (index2 - index1);
+					expr = upd.newStr;
+					
+					i = i - (upd.index2 - upd.index1);
 					if( i < 0 )
 						i = 0;
 				}
 			}
-			
 			
 			System.out.println( "Result of expression is " + expr);
 			System.out.println();
@@ -103,7 +72,19 @@ public class CalculatorImpl {
 		sc.close();
 	}
 	
-	
+	public static SingleUpdate performOp( BasicOperation op, String expr, int i ) {
+		int index1 = getOperand1( expr, i-1 );
+		int index2 = getOperand2( expr, i+1 );
+		
+		int num1 = Integer.valueOf( expr.substring(index1, i ) );
+		int num2 = Integer.valueOf( expr.substring(i+1, index2 ) );
+		
+		int res = op.resultOfOp( num1, num2);
+		String temp = expr.substring(0, index1) + String.valueOf(res)
+						+ expr.substring(index2);
+		
+		return new SingleUpdate( index1, index2, temp);
+	}
 	
 	public static int getOperand1(String expr, int pos) {
 		int tempPos = pos;
