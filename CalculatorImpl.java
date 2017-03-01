@@ -89,7 +89,7 @@ public class CalculatorImpl {
 	public static int getOperand1(String expr, int pos) {
 		int tempPos = pos;
 		while( tempPos >= 0 && 
-				( expr.charAt(tempPos) -'0' ) > 0 && ( expr.charAt(tempPos) -'0' ) < 10 ) {
+				( expr.charAt(tempPos) -'0' ) >= 0 && ( expr.charAt(tempPos) -'0' ) < 10 ) {
 			tempPos--;
 		}
 		
@@ -99,7 +99,7 @@ public class CalculatorImpl {
 	public static int getOperand2(String expr, int pos) {
 		int tempPos = pos;
 		while( tempPos < expr.length() && 
-				( expr.charAt(tempPos) -'0' ) > 0 && ( expr.charAt(tempPos) -'0' ) < 10) {
+				( expr.charAt(tempPos) -'0' ) >= 0 && ( expr.charAt(tempPos) -'0' ) < 10) {
 			tempPos++;
 		}
 		
