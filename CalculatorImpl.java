@@ -72,12 +72,12 @@ public class CalculatorImpl {
 		sc.close();
 	}
 	
-	public static SingleUpdate performOp( BasicOperation op, String expr, int i ) {
-		int index1 = getOperand1( expr, i-1 );
-		int index2 = getOperand2( expr, i+1 );
+	public static SingleUpdate performOp( BasicOperation op, String expr, int operIdx ) {
+		int index1 = getOperand1( expr, operIdx-1 );
+		int index2 = getOperand2( expr, operIdx+1 );
 		
-		int num1 = Integer.valueOf( expr.substring(index1, i ) );
-		int num2 = Integer.valueOf( expr.substring(i+1, index2 ) );
+		int num1 = Integer.valueOf( expr.substring(index1, operIdx ) );
+		int num2 = Integer.valueOf( expr.substring(operIdx+1, index2 ) );
 		
 		int res = op.resultOfOp( num1, num2);
 		String temp = expr.substring(0, index1) + String.valueOf(res)
